@@ -15,3 +15,4 @@ export * from './jurado-linea-investigacion.model';
 export * from './resultado-evaluacion.model';
 export * from './solicitud.model';
 export * from './solicitud-jurado-resultado.model';
+export * from './arreglo-lineas-investigacion.model';
