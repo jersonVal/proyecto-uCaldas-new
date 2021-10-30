@@ -9,6 +9,12 @@ export class ArregloJuradosSolicitud extends Model {
   })
   arreglo_jurados: string[];
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  id_solicitudResultado: string;
+
 
   constructor(data?: Partial<ArregloJuradosSolicitud>) {
     super(data);
