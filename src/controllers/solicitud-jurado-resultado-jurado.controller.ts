@@ -127,7 +127,6 @@ export class SolicitudJuradoResultadoJuradoController {
         },
       },
     }) datos: ArregloJuradosSolicitud,
-    // @param.path.string('id') id_solicitud: typeof SolicitudJuradoResultado.prototype._id,
   ): Promise<Boolean> {
     if (datos.arreglo_jurados.length > 0) {
       datos.arreglo_jurados.forEach(idJurado => {

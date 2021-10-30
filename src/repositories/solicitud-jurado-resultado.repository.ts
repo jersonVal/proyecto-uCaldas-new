@@ -1,19 +1,3 @@
-// import {inject} from '@loopback/core';
-// import {DefaultCrudRepository} from '@loopback/repository';
-// import {MongoDbDataSource} from '../datasources';
-// import {SolicitudJuradoResultado, SolicitudJuradoResultadoRelations} from '../models';
-
-// export class SolicitudJuradoResultadoRepository extends DefaultCrudRepository<
-//   SolicitudJuradoResultado,
-//   typeof SolicitudJuradoResultado.prototype._id,
-//   SolicitudJuradoResultadoRelations
-// > {
-//   constructor(
-//     @inject('datasources.mongoDb') dataSource: MongoDbDataSource,
-//   ) {
-//     super(SolicitudJuradoResultado, dataSource);
-//   }
-// }
 import {inject, Getter} from '@loopback/core';
 import {DefaultCrudRepository, repository, HasManyThroughRepositoryFactory} from '@loopback/repository';
 import {MongoDbDataSource} from '../datasources';
