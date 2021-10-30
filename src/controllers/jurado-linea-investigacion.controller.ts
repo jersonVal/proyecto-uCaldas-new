@@ -17,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {ArregloJurados, ArregloLineasInvestigacion, Jurado, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
+import {ArregloLineasInvestigacion, Jurado, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
 import {JuradoLineaInvestigacionRepository,JuradoRepository,LineaInvestigacionRepository} from '../repositories';
 
 export class JuradoLineaInvestigacionController {

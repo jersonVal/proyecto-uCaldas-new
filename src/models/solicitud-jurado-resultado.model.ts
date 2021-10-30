@@ -31,7 +31,7 @@ export class SolicitudJuradoResultado extends Entity {
   })
   observacion: string;
 
-  @belongsTo(() => Estado, {name: 'estad'})
+  @belongsTo(() => Estado, {name: 'estado'})
   id_estado: string;
 
   @belongsTo(() => Solicitud, {name: 'solicitud'})

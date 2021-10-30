@@ -29,3 +29,4 @@ export * from './solicitud-jurado-resultado-solicitud.controller';
 export * from './tipo-comite-solicitud.controller';
 export * from './linea-investigacion-jurado.controller';
 export * from './solicitud-jurado-resultado-jurado.controller';
+export * from './jurado-solicitud-jurado-resultado.controller';
