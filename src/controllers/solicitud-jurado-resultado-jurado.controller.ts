@@ -19,12 +19,14 @@ import {
 SolicitudJuradoResultado,
 SolicitudJurado,
 Jurado,
+ArregloJuradosSolicitud,
 } from '../models';
-import {SolicitudJuradoResultadoRepository} from '../repositories';
+import {SolicitudJuradoRepository, SolicitudJuradoResultadoRepository} from '../repositories';
 
 export class SolicitudJuradoResultadoJuradoController {
   constructor(
     @repository(SolicitudJuradoResultadoRepository) protected solicitudJuradoResultadoRepository: SolicitudJuradoResultadoRepository,
+    @repository(SolicitudJuradoRepository) protected solicitudJuradoRepository: SolicitudJuradoRepository,
   ) { }
 
   @get('/solicitud-jurado-resultados/{id}/jurados', {
@@ -106,5 +108,36 @@ export class SolicitudJuradoResultadoJuradoController {
     @param.query.object('where', getWhereSchemaFor(Jurado)) where?: Where<Jurado>,
   ): Promise<Count> {
     return this.solicitudJuradoResultadoRepository.jurados(id).delete(where);
+  }
+  
+
+  @post('/asociar-jurado-con-solicitud-resultado/', {
+    responses: {
+      '200': {
+        description: 'create a LineaInvestigacion model instance',
+        content: {'application/json': {schema: getModelSchemaRef(ArregloJuradosSolicitud)}},
+      },
+    },
+  })
+  async createRelations(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ArregloJuradosSolicitud, {}),
+        },
+      },
+    }) datos: ArregloJuradosSolicitud,
+    // @param.path.string('id') id_solicitud: typeof SolicitudJuradoResultado.prototype._id,
+  ): Promise<Boolean> {
+    if (datos.arreglo_jurados.length > 0) {
+      datos.arreglo_jurados.forEach(idJurado => {
+        this.solicitudJuradoRepository.create({
+          id_jurado: idJurado,
+          id_solicitudJuradoResultado: datos.id_solicitudResultado
+        })
+      })
+      return true
+    }
+    return false
   }
 }

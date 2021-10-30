@@ -17,3 +17,4 @@ export * from './solicitud.model';
 export * from './solicitud-jurado-resultado.model';
 export * from './arreglo-lineas-investigacion.model';
 export * from './arreglo-jurados-solicitud.model';
+export * from './solicitud-jurado-resultado.model';

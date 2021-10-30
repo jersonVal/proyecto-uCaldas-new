@@ -1,8 +1,9 @@
-import {Entity, model, property, belongsTo} from '@loopback/repository';
+import {Entity, model, property, belongsTo, hasOne} from '@loopback/repository';
 import {Estado} from './estado.model';
 import {TipoSolicitud} from './tipo-solicitud.model';
 import {Modalidad} from './modalidad.model';
 import {LineaInvestigacion} from './linea-investigacion.model';
+import {SolicitudJuradoResultado} from './solicitud-jurado-resultado.model';
 
 @model()
 export class Solicitud extends Entity {
@@ -48,6 +49,9 @@ export class Solicitud extends Entity {
 
   @belongsTo(() => LineaInvestigacion, {name: 'linea'})
   id_lineaInvestigacion: string;
+
+  @hasOne(() => SolicitudJuradoResultado, {keyTo: 'id_solicitud'})
+  solicitudJuradoResultado: SolicitudJuradoResultado;
 
   constructor(data?: Partial<Solicitud>) {
     super(data);

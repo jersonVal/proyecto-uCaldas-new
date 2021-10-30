@@ -147,4 +147,8 @@ export class DepartamentoController {
   async deleteById(@param.path.string('id') id: string): Promise<void> {
     await this.departamentoRepository.deleteById(id);
   }
+
+
+  
+  
 }
