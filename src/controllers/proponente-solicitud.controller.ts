@@ -17,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {ProponenteSolicitud} from '../models';
+import {ArraySolicitudesProponente, ProponenteSolicitud} from '../models';
 import {ProponenteSolicitudRepository} from '../repositories';
 
 export class ProponenteSolicitudController {
@@ -25,6 +25,37 @@ export class ProponenteSolicitudController {
     @repository(ProponenteSolicitudRepository)
     public proponenteSolicitudRepository : ProponenteSolicitudRepository,
   ) {}
+
+
+  @post('/asociar-array-soliciutdes-a-proponente/', {
+    responses: {
+      '200': {
+        description: 'create a LineaInvestigacion model instance',
+        content: {'application/json': {schema: getModelSchemaRef(ArraySolicitudesProponente)}},
+      },
+    },
+  })
+  async createRelations(
+    @requestBody({
+      content: {
+        'application/json': {
+          schema: getModelSchemaRef(ArraySolicitudesProponente, {}),
+        },
+      },
+    }) datos: ArraySolicitudesProponente,
+  ): Promise<Boolean> {
+    if (datos.array_solicitudes.length > 0) {
+      datos.array_solicitudes.forEach(solicitud => {
+        this.proponenteSolicitudRepository.create({
+          id_solicitud: solicitud,
+          id_proponente: datos.id_proponente
+        })
+      })
+      return true
+    }
+    return false
+  }
+
 
   @post('/proponente-solicituds')
   @response(200, {

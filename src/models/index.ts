@@ -18,3 +18,6 @@ export * from './solicitud-jurado-resultado.model';
 export * from './arreglo-lineas-investigacion.model';
 export * from './arreglo-jurados-solicitud.model';
 export * from './solicitud-jurado-resultado.model';
+export * from './array-tipo-comite.model';
+export * from './array-proponentes.model';
+export * from './array-solicitudes-proponente.model';

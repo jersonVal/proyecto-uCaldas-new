@@ -1,12 +1,16 @@
 import {inject, Getter} from '@loopback/core';
-import {DefaultCrudRepository, repository, BelongsToAccessor, HasOneRepositoryFactory} from '@loopback/repository';
+import {DefaultCrudRepository, repository, BelongsToAccessor, HasOneRepositoryFactory, HasManyThroughRepositoryFactory} from '@loopback/repository';
 import {MongoDbDataSource} from '../datasources';
-import {Solicitud, SolicitudRelations, Estado, TipoSolicitud, Modalidad, LineaInvestigacion, SolicitudJuradoResultado} from '../models';
+import {Solicitud, SolicitudRelations, Estado, TipoSolicitud, Modalidad, LineaInvestigacion, SolicitudJuradoResultado, TipoComite, SolicitudComite, Proponente, ProponenteSolicitud} from '../models';
 import {EstadoRepository} from './estado.repository';
 import {TipoSolicitudRepository} from './tipo-solicitud.repository';
 import {ModalidadRepository} from './modalidad.repository';
 import {LineaInvestigacionRepository} from './linea-investigacion.repository';
 import {SolicitudJuradoResultadoRepository} from './solicitud-jurado-resultado.repository';
+import {SolicitudComiteRepository} from './solicitud-comite.repository';
+import {TipoComiteRepository} from './tipo-comite.repository';
+import {ProponenteSolicitudRepository} from './proponente-solicitud.repository';
+import {ProponenteRepository} from './proponente.repository';
 
 export class SolicitudRepository extends DefaultCrudRepository<
   Solicitud,
@@ -24,10 +28,24 @@ export class SolicitudRepository extends DefaultCrudRepository<
 
   public readonly solicitudJuradoResultado: HasOneRepositoryFactory<SolicitudJuradoResultado, typeof Solicitud.prototype._id>;
 
+  public readonly tipoComites: HasManyThroughRepositoryFactory<TipoComite, typeof TipoComite.prototype._id,
+          SolicitudComite,
+          typeof Solicitud.prototype._id
+        >;
+
+  public readonly proponentes: HasManyThroughRepositoryFactory<Proponente, typeof Proponente.prototype._id,
+          ProponenteSolicitud,
+          typeof Solicitud.prototype._id
+        >;
+
   constructor(
-    @inject('datasources.mongoDb') dataSource: MongoDbDataSource, @repository.getter('EstadoRepository') protected estadoRepositoryGetter: Getter<EstadoRepository>, @repository.getter('TipoSolicitudRepository') protected tipoSolicitudRepositoryGetter: Getter<TipoSolicitudRepository>, @repository.getter('ModalidadRepository') protected modalidadRepositoryGetter: Getter<ModalidadRepository>, @repository.getter('LineaInvestigacionRepository') protected lineaInvestigacionRepositoryGetter: Getter<LineaInvestigacionRepository>, @repository.getter('SolicitudJuradoResultadoRepository') protected solicitudJuradoResultadoRepositoryGetter: Getter<SolicitudJuradoResultadoRepository>,
+    @inject('datasources.mongoDb') dataSource: MongoDbDataSource, @repository.getter('EstadoRepository') protected estadoRepositoryGetter: Getter<EstadoRepository>, @repository.getter('TipoSolicitudRepository') protected tipoSolicitudRepositoryGetter: Getter<TipoSolicitudRepository>, @repository.getter('ModalidadRepository') protected modalidadRepositoryGetter: Getter<ModalidadRepository>, @repository.getter('LineaInvestigacionRepository') protected lineaInvestigacionRepositoryGetter: Getter<LineaInvestigacionRepository>, @repository.getter('SolicitudJuradoResultadoRepository') protected solicitudJuradoResultadoRepositoryGetter: Getter<SolicitudJuradoResultadoRepository>, @repository.getter('SolicitudComiteRepository') protected solicitudComiteRepositoryGetter: Getter<SolicitudComiteRepository>, @repository.getter('TipoComiteRepository') protected tipoComiteRepositoryGetter: Getter<TipoComiteRepository>, @repository.getter('ProponenteSolicitudRepository') protected proponenteSolicitudRepositoryGetter: Getter<ProponenteSolicitudRepository>, @repository.getter('ProponenteRepository') protected proponenteRepositoryGetter: Getter<ProponenteRepository>,
   ) {
     super(Solicitud, dataSource);
+    this.proponentes = this.createHasManyThroughRepositoryFactoryFor('proponentes', proponenteRepositoryGetter, proponenteSolicitudRepositoryGetter,);
+    this.registerInclusionResolver('proponentes', this.proponentes.inclusionResolver);
+    this.tipoComites = this.createHasManyThroughRepositoryFactoryFor('tipoComites', tipoComiteRepositoryGetter, solicitudComiteRepositoryGetter,);
+    this.registerInclusionResolver('tipoComites', this.tipoComites.inclusionResolver);
     this.solicitudJuradoResultado = this.createHasOneRepositoryFactoryFor('solicitudJuradoResultado', solicitudJuradoResultadoRepositoryGetter);
     this.registerInclusionResolver('solicitudJuradoResultado', this.solicitudJuradoResultado.inclusionResolver);
     this.linea = this.createBelongsToAccessorFor('linea', lineaInvestigacionRepositoryGetter,);
