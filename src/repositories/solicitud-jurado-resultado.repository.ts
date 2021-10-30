@@ -13,7 +13,7 @@ export class SolicitudJuradoResultadoRepository extends DefaultCrudRepository<
   SolicitudJuradoResultadoRelations
 > {
 
-  public readonly estad: BelongsToAccessor<Estado, typeof SolicitudJuradoResultado.prototype._id>;
+  public readonly estado: BelongsToAccessor<Estado, typeof SolicitudJuradoResultado.prototype._id>;
 
   public readonly solicitud: BelongsToAccessor<Solicitud, typeof SolicitudJuradoResultado.prototype._id>;
 
