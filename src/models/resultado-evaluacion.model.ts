@@ -21,6 +21,12 @@ export class ResultadoEvaluacion extends Entity {
     required: true,
   })
   fecha: string;
+  
+  @property({
+    type: 'string',
+    required: true,
+  })
+  resultado: string;
 
   @property({
     type: 'object',
