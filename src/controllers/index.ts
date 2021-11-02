@@ -34,3 +34,4 @@ export * from './solicitud-tipo-comite.controller';
 export * from './solicitud-proponente.controller';
 
 export * from './cargar-archivos.controller';
+export * from './descarga-archivos.controller';
