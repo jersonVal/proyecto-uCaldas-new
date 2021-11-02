@@ -1,3 +1,4 @@
+import { authenticate } from '@loopback/authentication';
 import {
   Count,
   CountSchema,
@@ -23,12 +24,15 @@ ArregloJuradosSolicitud,
 } from '../models';
 import {SolicitudJuradoRepository, SolicitudJuradoResultadoRepository} from '../repositories';
 
+@authenticate('admin')
 export class SolicitudJuradoResultadoJuradoController {
   constructor(
     @repository(SolicitudJuradoResultadoRepository) protected solicitudJuradoResultadoRepository: SolicitudJuradoResultadoRepository,
     @repository(SolicitudJuradoRepository) protected solicitudJuradoRepository: SolicitudJuradoRepository,
   ) { }
 
+
+  //PERMIOS DE ADMINISTRADOR 
   @get('/solicitud-jurado-resultados/{id}/jurados', {
     responses: {
       '200': {
