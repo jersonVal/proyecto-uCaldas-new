@@ -32,3 +32,5 @@ export * from './solicitud-solicitud-jurado-resultado.controller';
 export * from './solicitud-jurado-resultado-jurado.controller';
 export * from './solicitud-tipo-comite.controller';
 export * from './solicitud-proponente.controller';
+
+export * from './cargar-archivos.controller';
