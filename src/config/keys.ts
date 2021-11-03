@@ -14,4 +14,9 @@ export namespace Keys {
     export const extensionesArchivoSolicitud: string[] = ['.PDF', '.DOC', '.DOCX', '.XLS', '.XLSX'];
     export const admin_rol = "617f715792854e2188063b68";
     export const url_validar_token = "http://localhost:5001/validar-token";
+    export const hashNotificacion = 'Jer'
+    export const urlCorreo = 'http://localhost:5000/correo'
+    export const asuntoSolicitud = 'Evaluacion de solicitud'
+    export const mensajeSolicitud = 'Usted a sido seleccionado para evaluar una solicitud'
+
 }

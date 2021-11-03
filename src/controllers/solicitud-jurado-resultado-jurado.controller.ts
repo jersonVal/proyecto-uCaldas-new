@@ -1,4 +1,5 @@
 import { authenticate } from '@loopback/authentication';
+import { service } from '@loopback/core';
 import {
   Count,
   CountSchema,
@@ -6,7 +7,7 @@ import {
   repository,
   Where,
 } from '@loopback/repository';
-  import {
+import {
   del,
   get,
   getModelSchemaRef,
@@ -17,18 +18,23 @@ import {
   requestBody,
 } from '@loopback/rest';
 import {
-SolicitudJuradoResultado,
-SolicitudJurado,
-Jurado,
-ArregloJuradosSolicitud,
+  SolicitudJuradoResultado,
+  SolicitudJurado,
+  Jurado,
+  ArregloJuradosSolicitud,
+  NotificacionCorreo,
 } from '../models';
-import {SolicitudJuradoRepository, SolicitudJuradoResultadoRepository} from '../repositories';
+import { Keys } from '../config/Keys';
+import { JuradoRepository, SolicitudJuradoRepository, SolicitudJuradoResultadoRepository } from '../repositories';
+import { NotificacionesService } from '../services';
 
 @authenticate('admin')
 export class SolicitudJuradoResultadoJuradoController {
   constructor(
     @repository(SolicitudJuradoResultadoRepository) protected solicitudJuradoResultadoRepository: SolicitudJuradoResultadoRepository,
     @repository(SolicitudJuradoRepository) protected solicitudJuradoRepository: SolicitudJuradoRepository,
+    @repository(JuradoRepository) protected juradoRepository: JuradoRepository,
+    @service(NotificacionesService) public servicioNotificaciones: NotificacionesService
   ) { }
 
 
@@ -39,7 +45,7 @@ export class SolicitudJuradoResultadoJuradoController {
         description: 'Array of SolicitudJuradoResultado has many Jurado through SolicitudJurado',
         content: {
           'application/json': {
-            schema: {type: 'array', items: getModelSchemaRef(Jurado)},
+            schema: { type: 'array', items: getModelSchemaRef(Jurado) },
           },
         },
       },
@@ -56,7 +62,7 @@ export class SolicitudJuradoResultadoJuradoController {
     responses: {
       '200': {
         description: 'create a Jurado model instance',
-        content: {'application/json': {schema: getModelSchemaRef(Jurado)}},
+        content: { 'application/json': { schema: getModelSchemaRef(Jurado) } },
       },
     },
   })
@@ -80,7 +86,7 @@ export class SolicitudJuradoResultadoJuradoController {
     responses: {
       '200': {
         description: 'SolicitudJuradoResultado.Jurado PATCH success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -89,7 +95,7 @@ export class SolicitudJuradoResultadoJuradoController {
     @requestBody({
       content: {
         'application/json': {
-          schema: getModelSchemaRef(Jurado, {partial: true}),
+          schema: getModelSchemaRef(Jurado, { partial: true }),
         },
       },
     })
@@ -103,7 +109,7 @@ export class SolicitudJuradoResultadoJuradoController {
     responses: {
       '200': {
         description: 'SolicitudJuradoResultado.Jurado DELETE success count',
-        content: {'application/json': {schema: CountSchema}},
+        content: { 'application/json': { schema: CountSchema } },
       },
     },
   })
@@ -113,13 +119,13 @@ export class SolicitudJuradoResultadoJuradoController {
   ): Promise<Count> {
     return this.solicitudJuradoResultadoRepository.jurados(id).delete(where);
   }
-  
+
 
   @post('/asociar-jurado-con-solicitud-resultado/', {
     responses: {
       '200': {
         description: 'create a LineaInvestigacion model instance',
-        content: {'application/json': {schema: getModelSchemaRef(ArregloJuradosSolicitud)}},
+        content: { 'application/json': { schema: getModelSchemaRef(ArregloJuradosSolicitud) } },
       },
     },
   })
@@ -133,11 +139,26 @@ export class SolicitudJuradoResultadoJuradoController {
     }) datos: ArregloJuradosSolicitud,
   ): Promise<Boolean> {
     if (datos.arreglo_jurados.length > 0) {
-      datos.arreglo_jurados.forEach(idJurado => {
+      datos.arreglo_jurados.forEach(async idJurado => {
         this.solicitudJuradoRepository.create({
           id_jurado: idJurado,
           id_solicitudJuradoResultado: datos.id_solicitudResultado
         })
+
+        //enviar correo al jurado
+        let jurado = await this.juradoRepository.findOne({
+          where: {
+            _id: idJurado,
+          }
+        })
+
+        if (jurado) {
+          let datos = new NotificacionCorreo();
+          datos.destino = jurado.correo;
+          datos.asunto = Keys.asuntoSolicitud;
+          datos.mensaje = `Hola ${jurado.nombre} <br> ${Keys.mensajeSolicitud} `
+          this.servicioNotificaciones.EnviarCorreo(datos);
+        }
       })
       return true
     }
