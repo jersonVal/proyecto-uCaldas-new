@@ -10,13 +10,15 @@ import {
 import multer from 'multer';
 import path from 'path';
 import {Keys as llaves} from '../config/keys';
+import { Proponente } from '../models';
+import { ProponenteRepository } from '../repositories';
 // import {Image} from '../models';
 // import {ImageRepository} from '../repositories';
 
 export class CargarArchivosController {
   constructor(
-    // @repository(ImageRepository)
-    // private imageRepository: ImageRepository
+     @repository(ProponenteRepository)
+     private proponenteRepository: ProponenteRepository
   ) { }
 
 
@@ -26,7 +28,7 @@ export class CargarArchivosController {
    * @param response
    * @param request
    */
-  @post('/CargarImagenProducto/{id_producto}', {
+  @post('/CargarFotoProponente/{id_proponente}', {
     responses: {
       200: {
         content: {
@@ -43,17 +45,22 @@ export class CargarArchivosController {
   async cargarImagenDelProducto(
     @inject(RestBindings.Http.RESPONSE) response: Response,
     @requestBody.file() request: Request,
-    // @param.path.number("id_producto") id_producto: number
+    @param.path.string("id_proponente") id_proponente: typeof Proponente.prototype._id,
   ): Promise<object | false> {
     const rutaFoto = path.join(__dirname, llaves.carpetaFoto);
     let res = await this.StoreFileToPath(rutaFoto, llaves.nombreCampoImagenProducto, request, response, llaves.extensionesPermitidasIMG);
     if (res) {
       const nombre_archivo = response.req?.file?.filename;
       if (nombre_archivo) {
-        // let img = new Image();
-        // img.name = nombre_archivo;
-        // img.productId = id_producto;
-        // await this.imageRepository.save(img);
+        let proponente = await this.proponenteRepository.findOne({
+          where: {
+            _id: id_proponente,
+          }
+        })
+        if (proponente) {
+          proponente.foto = nombre_archivo
+          await this.proponenteRepository.updateById(proponente._id,proponente)
+        }
         return {filename: nombre_archivo};
       }
     }

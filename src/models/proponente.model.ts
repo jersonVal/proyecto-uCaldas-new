@@ -60,9 +60,9 @@ export class Proponente extends Entity {
   celular: string;
 
   @property({
-    type: 'object'
+    type: 'string'
   })
-  foto?: object;
+  foto?: string;
 
   @belongsTo(() => Departamento, {name: 'pertenece'})
   id_departamento: string;
