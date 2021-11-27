@@ -28,7 +28,7 @@ import { Keys } from '../config/Keys';
 import { JuradoRepository, SolicitudJuradoRepository, SolicitudJuradoResultadoRepository } from '../repositories';
 import { NotificacionesService } from '../services';
 
-@authenticate('admin')
+// @authenticate('admin')
 export class SolicitudJuradoResultadoJuradoController {
   constructor(
     @repository(SolicitudJuradoResultadoRepository) protected solicitudJuradoResultadoRepository: SolicitudJuradoResultadoRepository,
@@ -151,11 +151,11 @@ export class SolicitudJuradoResultadoJuradoController {
           }
         })
         if (jurado) {
-          let datos = new NotificacionCorreo();
-          datos.destino = jurado.correo;
-          datos.asunto = Keys.asuntoSolicitud;
-          datos.mensaje = `Hola ${jurado.nombre} <br> ${Keys.mensajeSolicitud} `
-          this.servicioNotificaciones.EnviarCorreo(datos);
+          let mensaje = new NotificacionCorreo();
+          mensaje.destino = jurado.correo;
+          mensaje.asunto = Keys.asuntoSolicitud;
+          mensaje.mensaje = `Hola ${jurado.nombre} <br> ${Keys.mensajeSolicitud} ${datos.id_solicitudResultado}`
+          this.servicioNotificaciones.EnviarCorreo(mensaje);
         }
       })
       return true

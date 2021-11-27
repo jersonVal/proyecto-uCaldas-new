@@ -17,6 +17,6 @@ export namespace Keys {
     export const hashNotificacion = 'Jer'
     export const urlCorreo = 'http://localhost:5000/correo'
     export const asuntoSolicitud = 'Evaluacion de solicitud'
-    export const mensajeSolicitud = 'Usted a sido seleccionado para evaluar una solicitud'
+    export const mensajeSolicitud = 'Usted a sido seleccionado para evaluar la solicitud con id: '
 
 }
