@@ -17,23 +17,13 @@ export class Proponente extends Entity {
     type: 'string',
     required: true,
   })
-  primerNombre: string;
-
-  @property({
-    type: 'string',
-  })
-  segundoNombre?: string;
+  nombre: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  primerApellido: string;
-
-  @property({
-    type: 'string',
-  })
-  segundoApellido?: string;
+  apellidos: string;
 
   @property({
     type: 'string',
@@ -48,7 +38,7 @@ export class Proponente extends Entity {
   correo: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   fechaNacimiento: string;
