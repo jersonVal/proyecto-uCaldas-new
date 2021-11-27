@@ -144,14 +144,12 @@ export class SolicitudJuradoResultadoJuradoController {
           id_jurado: idJurado,
           id_solicitudJuradoResultado: datos.id_solicitudResultado
         })
-
         //enviar correo al jurado
         let jurado = await this.juradoRepository.findOne({
           where: {
             _id: idJurado,
           }
         })
-
         if (jurado) {
           let datos = new NotificacionCorreo();
           datos.destino = jurado.correo;

@@ -48,7 +48,7 @@ export class Proponente extends Entity {
   correo: string;
 
   @property({
-    type: 'date',
+    type: 'string',
     required: true,
   })
   fechaNacimiento: string;
