@@ -50,7 +50,8 @@ export class Proponente extends Entity {
   celular: string;
 
   @property({
-    type: 'string'
+    type: 'string',
+    default: ""
   })
   foto?: string;
 
