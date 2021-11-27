@@ -25,10 +25,10 @@ export class Solicitud extends Entity {
   fecha: string;
 
   @property({
-    type: 'object',
+    type: 'string',
     required: true,
   })
-  archivo: object;
+  archivo: string;
 
   @property({
     type: 'string',
