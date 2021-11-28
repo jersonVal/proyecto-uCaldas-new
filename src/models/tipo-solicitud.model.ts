@@ -10,10 +10,10 @@ export class TipoSolicitud extends Entity {
   _id?: string;
 
   @property({
-    type: 'object',
+    type: 'string',
     required: true,
   })
-  formato: object;
+  formato: string;
 
   @property({
     type: 'string',
