@@ -42,8 +42,11 @@ export class Solicitud extends Entity {
   })
   nombreTrabajo: string;
 
-  @belongsTo(() => Estado, {name: 'estado'})
-  id_estado: string;
+  // @belongsTo(() => Estado, {name: 'estado'})
+  // id_estado: string;
+
+  @belongsTo(()=> Proponente, {name:'proponente'})
+  id_proponente:string;
 
   @belongsTo(() => TipoSolicitud, {name: 'tipoSolicitud'})
   id_tipoSolicitud: string;

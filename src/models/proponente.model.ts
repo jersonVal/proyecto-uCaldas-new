@@ -54,6 +54,7 @@ export class Proponente extends Entity {
     default: ""
   })
   foto?: string;
+  
 
   @belongsTo(() => Departamento, {name: 'pertenece'})
   id_departamento: string;
