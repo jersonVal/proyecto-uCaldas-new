@@ -18,7 +18,8 @@ export class SolicitudRepository extends DefaultCrudRepository<
   SolicitudRelations
 > {
 
-  public readonly estado: BelongsToAccessor<Estado, typeof Solicitud.prototype._id>;
+  // public readonly estado: BelongsToAccessor<Estado, typeof Solicitud.prototype._id>;
+  public readonly proponente: BelongsToAccessor<Proponente, typeof Solicitud.prototype._id>;
 
   public readonly tipoSolicitud: BelongsToAccessor<TipoSolicitud, typeof Solicitud.prototype._id>;
 
@@ -54,7 +55,7 @@ export class SolicitudRepository extends DefaultCrudRepository<
     this.registerInclusionResolver('modalidad', this.modalidad.inclusionResolver);
     this.tipoSolicitud = this.createBelongsToAccessorFor('tipoSolicitud', tipoSolicitudRepositoryGetter,);
     this.registerInclusionResolver('tipoSolicitud', this.tipoSolicitud.inclusionResolver);
-    this.estado = this.createBelongsToAccessorFor('estado', estadoRepositoryGetter,);
-    this.registerInclusionResolver('estado', this.estado.inclusionResolver);
+    this.proponente = this.createBelongsToAccessorFor('proponente', proponenteRepositoryGetter,);
+    this.registerInclusionResolver('proponente', this.proponente.inclusionResolver);
   }
 }

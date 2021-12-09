@@ -9,6 +9,7 @@ import {
 import {
   Solicitud,
   Estado,
+  Proponente,
 } from '../models';
 import {SolicitudRepository} from '../repositories';
 
@@ -32,7 +33,7 @@ export class SolicitudEstadoController {
   })
   async getEstado(
     @param.path.string('id') id: typeof Solicitud.prototype._id,
-  ): Promise<Estado> {
-    return this.solicitudRepository.estado(id);
+  ): Promise<Proponente> {
+    return this.solicitudRepository.proponente(id);
   }
 }
