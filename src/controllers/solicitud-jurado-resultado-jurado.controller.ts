@@ -142,7 +142,11 @@ export class SolicitudJuradoResultadoJuradoController {
       datos.arreglo_jurados.forEach(async idJurado => {
         this.solicitudJuradoRepository.create({
           id_jurado: idJurado,
-          id_solicitudJuradoResultado: datos.id_solicitudResultado
+          id_solicitudJuradoResultado: datos.id_solicitudResultado,
+          fechaInvitacion: datos.fechaInvitacion,
+          fechaRespuesta: datos.fechaRespuesta,
+          observaciones: datos.observaciones,
+          id_estado: datos.id_estado
         })
         //enviar correo al jurado
         let jurado = await this.juradoRepository.findOne({

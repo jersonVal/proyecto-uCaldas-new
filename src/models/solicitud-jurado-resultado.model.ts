@@ -11,28 +11,6 @@ export class SolicitudJuradoResultado extends Entity {
   })
   _id?: string;
 
-  @property({
-    type: 'date',
-    required: true,
-  })
-  fechaInvitacion: string;
-
-  @property({
-    type: 'date',
-    required: true,
-  })
-  fechaRespuesta: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  observaciones: string;
-
-  @property({
-    type: 'string',
-  })
-  id_estado?: string;
 
   @property({
     type: 'string',

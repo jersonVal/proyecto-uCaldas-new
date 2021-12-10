@@ -60,8 +60,7 @@ export class EstadoSolicitudJuradoResultadoController {
         'application/json': {
           schema: getModelSchemaRef(SolicitudJuradoResultado, {
             title: 'NewSolicitudJuradoResultadoInEstado',
-            exclude: ['_id'],
-            optional: ['id_estado']
+            exclude: ['_id']
           }),
         },
       },

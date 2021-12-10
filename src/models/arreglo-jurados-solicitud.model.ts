@@ -15,6 +15,27 @@ export class ArregloJuradosSolicitud extends Model {
   })
   id_solicitudResultado: string;
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  fechaInvitacion: string;
+
+  @property({
+    type: 'string',
+  })
+  fechaRespuesta?: string;
+
+  @property({
+    type: 'string',
+  })
+  observaciones?: string;
+
+  @property({
+    type: 'string',
+  })
+  id_estado?: string;
+
 
   constructor(data?: Partial<ArregloJuradosSolicitud>) {
     super(data);

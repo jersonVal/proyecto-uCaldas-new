@@ -11,13 +11,36 @@ export class SolicitudJurado extends Entity {
 
   @property({
     type: 'string',
+    required: true
   })
-  id_solicitudJuradoResultado?: string;
+  id_solicitudJuradoResultado: string;
+
+  @property({
+    type: 'string',
+    required: true
+  })
+  id_jurado: string;
+
+  @property({
+    type: 'string',
+    required: true,
+  })
+  fechaInvitacion: string;
 
   @property({
     type: 'string',
   })
-  id_jurado?: string;
+  fechaRespuesta?: string;
+
+  @property({
+    type: 'string',
+  })
+  observaciones?: string;
+
+  @property({
+    type: 'string',
+  })
+  id_estado?: string;
 
   constructor(data?: Partial<SolicitudJurado>) {
     super(data);
