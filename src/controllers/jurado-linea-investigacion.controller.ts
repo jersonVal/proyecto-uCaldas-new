@@ -1,27 +1,16 @@
 import {
-  Count,
-  CountSchema,
-  Filter,
-  FilterExcludingWhere,
-  repository,
-  Where,
+  Filter, repository
 } from '@loopback/repository';
 import {
-  post,
-  param,
   get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  getModelSchemaRef, param, post, requestBody,
+  response
 } from '@loopback/rest';
 import {ArregloLineasInvestigacion, Jurado, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
-import {JuradoLineaInvestigacionRepository,JuradoRepository,LineaInvestigacionRepository} from '../repositories';
+import {JuradoLineaInvestigacionRepository, JuradoRepository, LineaInvestigacionRepository} from '../repositories';
 
 export class JuradoLineaInvestigacionController {
-  
+
   constructor(
     @repository(JuradoLineaInvestigacionRepository)
     public juradoLineaInvestigacionRepository : JuradoLineaInvestigacionRepository,
@@ -43,12 +32,30 @@ export class JuradoLineaInvestigacionController {
       },
     },
   })
-  async find(
+  async find2(
     @param.path.string('id') _id: string,
     @param.query.object('filter') filter?: Filter<LineaInvestigacion>,
   ): Promise<LineaInvestigacion[]> {
     const busqueda = await this.juradoRepository.lineaInvestigacions(_id).find(filter);
     return busqueda
+  }
+
+  @get('/lineas-investigacion-jurado')
+  @response(200, {
+    description: 'Array of lineas model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(JuradoLineaInvestigacion, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async find(
+    @param.filter(JuradoLineaInvestigacion) filter?: Filter<JuradoLineaInvestigacion>,
+  ): Promise<JuradoLineaInvestigacion[]> {
+    return this.juradoLineaInvestigacionRepository.find(filter);
   }
 
   @post('/asociar-jurado-lineas-investigacion/', {
@@ -104,5 +111,5 @@ export class JuradoLineaInvestigacionController {
     let registro = await this.juradoLineaInvestigacionRepository.create(datos);
     return registro;
   }
-  
+
 }
