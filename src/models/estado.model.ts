@@ -16,7 +16,7 @@ export class Estado extends Entity {
   })
   tipo: string;
 
-  @hasOne(() => SolicitudJuradoResultado, {keyTo: 'id_estado'})
+  @hasOne(() => SolicitudJuradoResultado, {keyTo: 'estadoId'})
   solicitudJuradoResultado: SolicitudJuradoResultado;
 
   constructor(data?: Partial<Estado>) {
