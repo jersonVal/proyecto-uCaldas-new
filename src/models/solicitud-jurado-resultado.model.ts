@@ -1,4 +1,4 @@
-import {Entity, model, property, hasMany} from '@loopback/repository';
+import {Entity, hasMany, model, property} from '@loopback/repository';
 import {Jurado} from './jurado.model';
 import {SolicitudJurado} from './solicitud-jurado.model';
 
@@ -16,6 +16,12 @@ export class SolicitudJuradoResultado extends Entity {
     type: 'string',
   })
   id_solicitud?: string;
+
+  @property({
+    type: 'string',
+  })
+  estadoId?: string;
+
 
   @hasMany(() => Jurado, {through: {model: () => SolicitudJurado, keyFrom: 'id_solicitudJuradoResultado', keyTo: 'id_jurado'}})
   jurados: Jurado[];
