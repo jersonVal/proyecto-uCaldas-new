@@ -9,6 +9,14 @@ export class ArregloLineasInvestigacion extends Model {
   })
   lineas_investigacion: string[];
 
+  @property({
+    type: 'string',
+    required: true,
+  })
+  id_jurado: string;
+
+
+
 
   constructor(data?: Partial<ArregloLineasInvestigacion>) {
     super(data);

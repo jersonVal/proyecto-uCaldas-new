@@ -6,7 +6,7 @@ import {
   getModelSchemaRef, param, post, requestBody,
   response
 } from '@loopback/rest';
-import {ArregloLineasInvestigacion, Jurado, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
+import {ArregloLineasInvestigacion, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
 import {JuradoLineaInvestigacionRepository, JuradoRepository, LineaInvestigacionRepository} from '../repositories';
 
 export class JuradoLineaInvestigacionController {
@@ -74,12 +74,12 @@ export class JuradoLineaInvestigacionController {
         },
       },
     }) datos: ArregloLineasInvestigacion,
-    @param.path.string('id') id_jurado: typeof Jurado.prototype._id,
+    // @param.path.string('id') id_jurado: typeof Jurado.prototype._id,
   ): Promise<Boolean> {
     if (datos.lineas_investigacion.length > 0) {
       datos.lineas_investigacion.forEach(idLinea => {
         this.juradoLineaInvestigacionRepository.create({
-          id_jurado: id_jurado,
+          id_jurado: datos.id_jurado,
           id_lineaInvestigacion: idLinea
         })
       })
