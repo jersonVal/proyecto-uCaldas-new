@@ -1,9 +1,10 @@
 import {
-  Filter, repository
+  Filter, FilterExcludingWhere, repository
 } from '@loopback/repository';
 import {
+  del,
   get,
-  getModelSchemaRef, param, post, requestBody,
+  getModelSchemaRef, param, patch, post, put, requestBody,
   response
 } from '@loopback/rest';
 import {ArregloLineasInvestigacion, JuradoLineaInvestigacion, LineaInvestigacion} from '../models';
@@ -110,6 +111,42 @@ export class JuradoLineaInvestigacionController {
   ): Promise<JuradoLineaInvestigacion | null> {
     let registro = await this.juradoLineaInvestigacionRepository.create(datos);
     return registro;
+  }
+
+  @get('/lineas-investigacion-jurado/{id}')
+  @response(200, {
+    description: 'JuradoLineaInvestigacion model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(JuradoLineaInvestigacion, {includeRelations: true}),
+      },
+    },
+  })
+  async findById(
+    @param.path.string('id') id: string,
+    @param.filter(JuradoLineaInvestigacion, {exclude: 'where'}) filter?: FilterExcludingWhere<JuradoLineaInvestigacion>
+  ): Promise<JuradoLineaInvestigacion> {
+    return this.juradoLineaInvestigacionRepository.findById(id, filter);
+  }
+
+
+  @put('/lineas-investigacion-jurado/{id}')
+  @response(204, {
+    description: 'JuradoLineaInvestigacion PUT success',
+  })
+  async replaceById(
+    @param.path.string('id') id: string,
+    @requestBody() juradoLineaInvestigacion: JuradoLineaInvestigacion,
+  ): Promise<void> {
+    await this.juradoLineaInvestigacionRepository.replaceById(id, juradoLineaInvestigacion);
+  }
+
+  @del('/lineas-investigacion-jurado/{id}')
+  @response(204, {
+    description: 'JuradoLineaInvestigacion DELETE success',
+  })
+  async deleteById(@param.path.string('id') id: string): Promise<void> {
+    await this.juradoLineaInvestigacionRepository.deleteById(id);
   }
 
 }
