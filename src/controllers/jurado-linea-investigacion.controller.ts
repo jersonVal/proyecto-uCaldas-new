@@ -58,7 +58,7 @@ export class JuradoLineaInvestigacionController {
     return this.juradoLineaInvestigacionRepository.find(filter);
   }
 
-  @post('/asociar-jurado-lineas-investigacion/', {
+  @post('/asociar-jurado-lineas-investigacion', {
     responses: {
       '200': {
         description: 'create a LineaInvestigacion model instance',
