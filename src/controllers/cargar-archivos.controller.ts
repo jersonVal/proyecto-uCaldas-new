@@ -10,8 +10,8 @@ import {
 import multer from 'multer';
 import path from 'path';
 import {Keys as llaves} from '../config/keys';
-import { Proponente } from '../models';
-import { ProponenteRepository } from '../repositories';
+import {Proponente} from '../models';
+import {ProponenteRepository} from '../repositories';
 // import {Image} from '../models';
 // import {ImageRepository} from '../repositories';
 
@@ -95,6 +95,37 @@ export class CargarArchivosController {
     }
     return res;
   }
+
+  @post('/CargarArchivo', {
+    responses: {
+      200: {
+        content: {
+          'application/json': {
+            schema: {
+              type: 'object',
+            },
+          },
+        },
+        description: 'Función de carga de la imagen de un producto.',
+      },
+    },
+  })
+  async cargarArchivo(
+    @inject(RestBindings.Http.RESPONSE) response: Response,
+    @requestBody.file() request: Request
+  ): Promise<object | false> {
+    const rutaArchivo = path.join(__dirname, llaves.carpetaArchivo);
+    let res = await this.StoreFileToPath(rutaArchivo, llaves.nombreCampoImagenProducto, request, response, llaves.extensionesArchivoSolicitud);
+    if (res) {
+      const nombre_archivo = response.req?.file?.filename;
+      if (nombre_archivo) {
+        return {filename: nombre_archivo};
+      }
+    }
+    return res;
+  }
+
+
 
   /**
    *

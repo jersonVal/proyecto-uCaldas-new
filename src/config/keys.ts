@@ -4,6 +4,7 @@ export namespace Keys {
     export const extensionesPermitidasIMG: string[] = ['.PNG', '.JPG', '.JPEG', '.SVG'];
     export const tamMaxImagenProducto = 1024 * 1024;
     export const carpetaFormato = '../../archivos/formato';
+    export const carpetaArchivo = '../../archivos/archivo_solicitud';
     export const nombreCampoFormato = 'file';
     export const extensionesPermitidasDOC: string[] = ['.PDF', '.DOC', '.DOCX', '.XLS', '.XLSX'];
     export const carpetaFormatoDiligenciado = '../../archivos/formato_diligenciado';
