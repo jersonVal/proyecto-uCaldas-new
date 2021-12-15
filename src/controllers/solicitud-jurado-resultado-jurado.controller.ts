@@ -158,7 +158,21 @@ export class SolicitudJuradoResultadoJuradoController {
           let mensaje = new NotificacionCorreo();
           mensaje.destino = jurado.correo;
           mensaje.asunto = Keys.asuntoSolicitud;
-          mensaje.mensaje = `Hola ${jurado.nombre} <br> ${Keys.mensajeSolicitud} ${datos.id_solicitudResultado}`
+          mensaje.mensaje = `
+          Hola ${jurado.nombre}
+          
+          usted a sido elegido para ser jurado de la solicitud:
+
+          ${datos.id_solicitudResultado}
+
+          dar click en boton de abajo para confirmar o cancelar la invitacion
+
+          <div style="display: flex; justify-content: space-around; align-items: center">
+          <a href="google.com" target=""_blank style="background-color: blue; cursor: pointer; color: white; border: none; padding: .5rem 2rem; border-radius: 8px;">Aceptar</a>
+          <a href="google.com" target=""_blank style="background-color: red; cursor: pointer; color: white; border: none; padding: .5rem 2rem; border-radius: 8px;">Cancelar</a>
+          </div>
+
+          `
           this.servicioNotificaciones.EnviarCorreo(mensaje);
         }
       })
